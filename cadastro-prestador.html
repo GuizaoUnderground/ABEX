@@ -4,33 +4,67 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Cadastro Prestador - Precisou? Encontre aqui!</title>
-  <style>
-    body { font-family: Arial, sans-serif; padding: 20px; max-width: 600px; margin: auto; }
-    h1 { color: #0077cc; }
-    form { display: flex; flex-direction: column; }
-    input, select, textarea, button {
-      margin-bottom: 15px; padding: 10px; border-radius: 4px; border: 1px solid #ccc;
-    }
-    button {
-      background-color: #0077cc; color: white; border: none; cursor: pointer;
-    }
-    a { color: #0077cc; text-decoration: none; }
-  </style>
+  <link rel="stylesheet" href="style.css" />
 </head>
 <body>
   <h1>Cadastro de Prestador de Serviço</h1>
-  <form action="https://formspree.io/f/mayvjeqp" method="POST">
+  <form action="https://formspree.io/f/mldngnoa" method="POST" onsubmit="return validarTelefone()">
     <input type="text" name="nome" placeholder="Seu nome completo" required />
     <input type="email" name="email" placeholder="Seu e-mail" required />
+    
+    <input
+      type="tel"
+      id="telefone"
+      name="telefone"
+      placeholder="(XX) XXXXX-XXXX"
+      maxlength="15"
+      required
+      autocomplete="off"
+    />
+
     <select name="servico" required>
       <option value="" disabled selected>Selecione o serviço</option>
       <option value="Eletricista">Eletricista</option>
       <option value="Encanador">Encanador</option>
       <option value="Jardineiro">Jardineiro</option>
     </select>
+
     <textarea name="descricao" rows="4" placeholder="Descrição do serviço / experiência" required></textarea>
     <button type="submit">Enviar Cadastro</button>
   </form>
+
   <p><a href="index.html">← Voltar para a página inicial</a></p>
+
+  <script>
+    const telefoneInput = document.getElementById('telefone');
+
+    telefoneInput.addEventListener('input', function (e) {
+      let x = e.target.value.replace(/\D/g, '').slice(0, 11);
+      let formatted = '';
+
+      if (x.length > 0) {
+        formatted += '(' + x.substring(0, 2);
+      }
+      if (x.length >= 3) {
+        formatted += ') ' + x.substring(2, 7);
+      }
+      if (x.length >= 8) {
+        formatted += '-' + x.substring(7, 11);
+      }
+
+      e.target.value = formatted;
+    });
+
+    function validarTelefone() {
+      const telefone = telefoneInput.value;
+      const regex = /^\(\d{2}\) \d{5}-\d{4}$/;
+      if (!regex.test(telefone)) {
+        alert('Por favor, digite um telefone válido no formato (XX) XXXXX-XXXX');
+        telefoneInput.focus();
+        return false;
+      }
+      return true;
+    }
+  </script>
 </body>
 </html>
