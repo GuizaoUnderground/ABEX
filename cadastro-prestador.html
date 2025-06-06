@@ -8,7 +8,7 @@
 </head>
 <body>
   <h1>Cadastro de Prestador de Serviço</h1>
-  <form action="https://formspree.io/f/mldngnoa" method="POST" onsubmit="return validarTelefone()">
+  <form id="cadastroPrestadorForm" method="POST">
     <input type="text" name="nome" placeholder="Seu nome completo" required />
     <input type="email" name="email" placeholder="Seu e-mail" required />
     
@@ -35,8 +35,18 @@
 
   <p><a href="index.html">← Voltar para a página inicial</a></p>
 
+  <div id="mensagemSucesso" style="color: green; font-weight: bold; margin-top: 20px; display: none;">
+    Cadastro realizado com sucesso!
+  </div>
+  <div id="mensagemErro" style="color: red; font-weight: bold; margin-top: 20px; display: none;">
+    Erro ao realizar cadastro.
+  </div>
+
   <script>
     const telefoneInput = document.getElementById('telefone');
+    const form = document.getElementById('cadastroPrestadorForm');
+    const mensagemSucesso = document.getElementById('mensagemSucesso');
+    const mensagemErro = document.getElementById('mensagemErro');
 
     telefoneInput.addEventListener('input', function (e) {
       let x = e.target.value.replace(/\D/g, '').slice(0, 11);
@@ -65,6 +75,47 @@
       }
       return true;
     }
+
+    form.addEventListener('submit', function(event) {
+      event.preventDefault();
+
+      mensagemSucesso.style.display = 'none';
+      mensagemErro.style.display = 'none';
+
+      if (!validarTelefone()) {
+        return;
+      }
+
+      const formData = {
+        nome: form.nome.value.trim(),
+        email: form.email.value.trim(),
+        telefone: form.telefone.value.trim(),
+        servico: form.servico.value,
+        descricao: form.descricao.value.trim()
+      };
+
+      fetch('http://localhost:3000/cadastro-prestador', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(formData)
+      })
+      .then(response => response.json())
+      .then(data => {
+        if (data.message) {
+          mensagemSucesso.style.display = 'block';
+          form.reset();
+        } else if (data.error) {
+          mensagemErro.textContent = data.error;
+          mensagemErro.style.display = 'block';
+        }
+      })
+      .catch(() => {
+        mensagemErro.textContent = 'Erro na rede, tente novamente mais tarde.';
+        mensagemErro.style.display = 'block';
+      });
+    });
   </script>
 </body>
 </html>

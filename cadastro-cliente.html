@@ -27,11 +27,15 @@
   <div id="mensagemSucesso" style="color: green; font-weight: bold; margin-top: 20px; display: none;">
     Cadastro realizado com sucesso!
   </div>
+  <div id="mensagemErro" style="color: red; font-weight: bold; margin-top: 20px; display: none;">
+    Erro ao realizar cadastro.
+  </div>
 
   <script>
     const telefoneInput = document.getElementById('telefone');
     const form = document.getElementById('cadastroForm');
     const mensagemSucesso = document.getElementById('mensagemSucesso');
+    const mensagemErro = document.getElementById('mensagemErro');
 
     telefoneInput.addEventListener('input', function (e) {
       let x = e.target.value.replace(/\D/g, '').slice(0, 11);
@@ -64,35 +68,39 @@
     form.addEventListener('submit', function(event) {
       event.preventDefault();
 
+      mensagemSucesso.style.display = 'none';
+      mensagemErro.style.display = 'none';
+
       if (!validarTelefone()) {
         return;
       }
 
-      const formData = new FormData(form);
+      const formData = {
+        nome: form.nome.value.trim(),
+        email: form.email.value.trim(),
+        telefone: form.telefone.value.trim()
+      };
 
-      fetch('https://formspree.io/f/mldngnoa', {
+      fetch('http://localhost:3000/cadastro-cliente', {
         method: 'POST',
-        body: formData,
         headers: {
-          'Accept': 'application/json'
-        }
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(formData)
       })
-      .then(response => {
-        if (response.ok) {
+      .then(response => response.json())
+      .then(data => {
+        if (data.message) {
           mensagemSucesso.style.display = 'block';
           form.reset();
-        } else {
-          return response.json().then(data => {
-            if (Object.hasOwn(data, 'errors')) {
-              alert(data["errors"].map(error => error.message).join(", "));
-            } else {
-              alert('Erro ao enviar o formulário.');
-            }
-          });
+        } else if (data.error) {
+          mensagemErro.textContent = data.error;
+          mensagemErro.style.display = 'block';
         }
       })
       .catch(() => {
-        alert('Erro na rede, tente novamente mais tarde.');
+        mensagemErro.textContent = 'Erro na rede, tente novamente mais tarde.';
+        mensagemErro.style.display = 'block';
       });
     });
   </script>
