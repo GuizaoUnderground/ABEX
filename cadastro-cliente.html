@@ -4,27 +4,97 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Cadastro Cliente - Precisou? Encontre aqui!</title>
-  <style>
-    body { font-family: Arial, sans-serif; padding: 20px; max-width: 600px; margin: auto; }
-    h1 { color: #0077cc; }
-    form { display: flex; flex-direction: column; }
-    input, textarea, button {
-      margin-bottom: 15px; padding: 10px; border-radius: 4px; border: 1px solid #ccc;
-    }
-    button {
-      background-color: #0077cc; color: white; border: none; cursor: pointer;
-    }
-    a { color: #0077cc; text-decoration: none; }
-  </style>
+  <link rel="stylesheet" href="style.css" />
 </head>
 <body>
   <h1>Cadastro de Cliente</h1>
-  <form action="https://formspree.io/f/mayvjeqp" method="POST">
+  <form id="cadastroForm" method="POST">
     <input type="text" name="nome" placeholder="Seu nome completo" required />
     <input type="email" name="email" placeholder="Seu e-mail" required />
-    <textarea name="descricao" rows="4" placeholder="Descreva suas necessidades / serviço desejado" required></textarea>
+    <input
+      type="tel"
+      id="telefone"
+      name="telefone"
+      placeholder="(XX) XXXXX-XXXX"
+      maxlength="15"
+      required
+      autocomplete="off"
+    />
     <button type="submit">Enviar Cadastro</button>
   </form>
   <p><a href="index.html">← Voltar para a página inicial</a></p>
+
+  <div id="mensagemSucesso" style="color: green; font-weight: bold; margin-top: 20px; display: none;">
+    Cadastro realizado com sucesso!
+  </div>
+
+  <script>
+    const telefoneInput = document.getElementById('telefone');
+    const form = document.getElementById('cadastroForm');
+    const mensagemSucesso = document.getElementById('mensagemSucesso');
+
+    telefoneInput.addEventListener('input', function (e) {
+      let x = e.target.value.replace(/\D/g, '').slice(0, 11);
+      let formatted = '';
+
+      if (x.length > 0) {
+        formatted += '(' + x.substring(0, 2);
+      }
+      if (x.length >= 3) {
+        formatted += ') ' + x.substring(2, 7);
+      }
+      if (x.length >= 8) {
+        formatted += '-' + x.substring(7, 11);
+      }
+
+      e.target.value = formatted;
+    });
+
+    function validarTelefone() {
+      const telefone = telefoneInput.value;
+      const regex = /^\(\d{2}\) \d{5}-\d{4}$/;
+      if (!regex.test(telefone)) {
+        alert('Por favor, digite um telefone válido no formato (XX) XXXXX-XXXX');
+        telefoneInput.focus();
+        return false;
+      }
+      return true;
+    }
+
+    form.addEventListener('submit', function(event) {
+      event.preventDefault();
+
+      if (!validarTelefone()) {
+        return;
+      }
+
+      const formData = new FormData(form);
+
+      fetch('https://formspree.io/f/mldngnoa', {
+        method: 'POST',
+        body: formData,
+        headers: {
+          'Accept': 'application/json'
+        }
+      })
+      .then(response => {
+        if (response.ok) {
+          mensagemSucesso.style.display = 'block';
+          form.reset();
+        } else {
+          return response.json().then(data => {
+            if (Object.hasOwn(data, 'errors')) {
+              alert(data["errors"].map(error => error.message).join(", "));
+            } else {
+              alert('Erro ao enviar o formulário.');
+            }
+          });
+        }
+      })
+      .catch(() => {
+        alert('Erro na rede, tente novamente mais tarde.');
+      });
+    });
+  </script>
 </body>
 </html>

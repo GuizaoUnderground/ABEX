@@ -4,88 +4,19 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Precisou? Encontre aqui!</title>
-  <style>
-    body {
-      font-family: Arial, sans-serif;
-      margin: 0;
-      padding: 0;
-      line-height: 1.6;
-    }
-    header {
-      background-color: #0077cc;
-      color: white;
-      padding: 20px;
-      text-align: center;
-    }
-    nav a {
-      color: white;
-      margin: 0 10px;
-      text-decoration: none;
-      font-weight: bold;
-    }
-    .hero {
-      background-color: #e9f5ff;
-      padding: 60px 20px;
-      text-align: center;
-    }
-    .hero h1 {
-      font-size: 2.5em;
-      margin-bottom: 10px;
-    }
-    .servicos, .sobre, .contato {
-      padding: 40px 20px;
-      max-width: 900px;
-      margin: auto;
-    }
-    .servico-item {
-      background-color: #f2f2f2;
-      padding: 20px;
-      margin-bottom: 20px;
-      border-radius: 8px;
-    }
-    .servico-item a {
-      text-decoration: none;
-      color: #0077cc;
-      font-weight: bold;
-    }
-    form {
-      display: flex;
-      flex-direction: column;
-    }
-    input, textarea {
-      padding: 10px;
-      margin-bottom: 10px;
-      border: 1px solid #ccc;
-      border-radius: 4px;
-    }
-    button {
-      padding: 10px;
-      background-color: #0077cc;
-      color: white;
-      border: none;
-      border-radius: 4px;
-      cursor: pointer;
-    }
-    footer {
-      background-color: #333;
-      color: white;
-      text-align: center;
-      padding: 20px;
-    }
-  </style>
+  <link rel="stylesheet" href="style.css" />
 </head>
 <body>
 
   <header>
     <h1>Precisou? Encontre aqui!</h1>
-<nav>
-  <a href="#servicos">Serviços</a>
-  <a href="#sobre">Sobre</a>
-  <a href="#contato">Contato</a>
-  <a href="cadastro-prestador.html">Cadastro Prestador</a>
-  <a href="cadastro-cliente.html">Cadastro Cliente</a>
-</nav>
-
+    <nav>
+      <a href="#servicos">Serviços</a>
+      <a href="#sobre">Sobre</a>
+      <a href="#contato">Contato</a>
+      <a href="cadastro-prestador.html">Cadastro Prestador</a>
+      <a href="cadastro-cliente.html">Cadastro Cliente</a>
+    </nav>
   </header>
 
   <section class="hero">
@@ -117,25 +48,15 @@
     <p>Somos a plataforma “Precisou? Encontre aqui!”, que conecta você com os melhores profissionais da sua região. Nosso objetivo é oferecer serviços de qualidade com segurança, agilidade e confiança.</p>
   </section>
 
-  <section id="contato" class="contato">
-    <h2>Contato</h2>
-    <form>
-      <input type="text" placeholder="Seu nome" required />
-      <input type="email" placeholder="Seu e-mail" required />
-      <textarea rows="5" placeholder="Digite sua mensagem" required></textarea>
-      <button type="submit">Enviar</button>
-    </form>
+  <section class="cadastros" style="text-align:center; padding: 30px 20px;">
+    <h2>Cadastre-se</h2>
+    <p>Seja um prestador de serviço ou um cliente, faça seu cadastro!</p>
+    <a href="cadastro-prestador.html" style="margin-right:20px; background-color:#0077cc; color:white; padding:10px 20px; border-radius:5px; text-decoration:none;">Cadastro Prestador</a>
+    <a href="cadastro-cliente.html" style="background-color:#0077cc; color:white; padding:10px 20px; border-radius:5px; text-decoration:none;">Cadastro Cliente</a>
   </section>
-
-<section class="cadastros" style="text-align:center; padding: 30px 20px;">
-  <h2>Cadastre-se</h2>
-  <p>Seja um prestador de serviço ou um cliente, faça seu cadastro!</p>
-  <a href="cadastro-prestador.html" style="margin-right:20px; background-color:#0077cc; color:white; padding:10px 20px; border-radius:5px; text-decoration:none;">Cadastro Prestador</a>
-  <a href="cadastro-cliente.html" style="background-color:#0077cc; color:white; padding:10px 20px; border-radius:5px; text-decoration:none;">Cadastro Cliente</a>
-</section>
   
   <footer>
-    <p>&copy; Precisou? Encontre aqui! Todos os direitos reservados. 2025</p>
+    <p>&copy; 2025 Precisou? Encontre aqui! Todos os direitos reservados.</p>
   </footer>
 
 </body>
