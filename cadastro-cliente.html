@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Cadastro Cliente - Precisou? Encontre aqui!</title>
+  <style>
+    body { font-family: Arial, sans-serif; padding: 20px; max-width: 600px; margin: auto; }
+    h1 { color: #0077cc; }
+    form { display: flex; flex-direction: column; }
+    input, textarea, button {
+      margin-bottom: 15px; padding: 10px; border-radius: 4px; border: 1px solid #ccc;
+    }
+    button {
+      background-color: #0077cc; color: white; border: none; cursor: pointer;
+    }
+    a { color: #0077cc; text-decoration: none; }
+  </style>
+</head>
+<body>
+  <h1>Cadastro de Cliente</h1>
+  <form action="https://formspree.io/f/mayvjeqp" method="POST">
+    <input type="text" name="nome" placeholder="Seu nome completo" required />
+    <input type="email" name="email" placeholder="Seu e-mail" required />
+    <textarea name="descricao" rows="4" placeholder="Descreva suas necessidades / serviço desejado" required></textarea>
+    <button type="submit">Enviar Cadastro</button>
+  </form>
+  <p><a href="index.html">← Voltar para a página inicial</a></p>
+</body>
+</html>
